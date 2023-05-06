@@ -86,10 +86,10 @@ class COCO_Concatenator:
 	def read_multiple(self, file_names):
 		for file_name in file_names:
 			try:
-				print("{file_name} readed")
+				print(f"{file_name} readed")
 				self.read_file(file_name)
 			except OSError as err:
-				print(err)
+				print("OSError:", err)
 
 
 
@@ -109,11 +109,10 @@ if __name__ == "__main__":
 	parser.add_argument('-o', '-output', dest="output_file", required=True, type=str, nargs=1, help='Output filename.')
 
 	args = parser.parse_args()
-
 	try:
 		coco = COCO_Concatenator()
 		coco.read_multiple(args.input_files)
-		coco.join_to_file(args.output_file)
+		coco.join_to_file(args.output_file[0])
 	except Exception as err:
 		print(err)
 
