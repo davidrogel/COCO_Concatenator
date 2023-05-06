@@ -100,12 +100,21 @@ if __name__ == "__main__":
 	from os import path
 	import argparse
 
-	# coco = COCO_Concatenator()
-	# files = ['./dataset/labels_dr_brochas_copia.json',
-	# './dataset/b_labels_copia.json',
-	# './dataset/jb_llave_copia.json',
-	# './dataset/y_copia.json']
-	# coco.read_multiple(files)
-	# coco.join_to_file("test_brochas.json")
+	parser = argparse.ArgumentParser(
+		prog = "COCO Concatenator files",
+		description = "Script to Concatenate COCO Files in One"
+	)
+
+	parser.add_argument('-f', '-filenames', dest="input_files", required=True, type=str, nargs='+', help='File(s) to be parsed and included in the output.')
+	parser.add_argument('-o', '-output', dest="output_file", required=True, type=str, nargs=1, help='Output filename.')
+
+	args = parser.parse_args()
+
+	try:
+		coco = COCO_Concatenator()
+		coco.read_multiple(args.input_files)
+		coco.join_to_file(args.output_file)
+	except Exception as err:
+		print(err)
 
 
